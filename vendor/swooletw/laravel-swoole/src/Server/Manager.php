@@ -23,7 +23,7 @@ use SwooleTW\Http\Concerns\InteractsWithWebsocket;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use SwooleTW\Http\Concerns\InteractsWithSwooleQueue;
 use SwooleTW\Http\Concerns\InteractsWithSwooleTable;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Symfony\Component\ErrorHandler\Error\FatalError;
 
 /**
  * Class Manager
@@ -225,7 +225,7 @@ class Manager
             $illuminateResponse = $sandbox->run($illuminateRequest);
 
             // send response
-            Response::make($illuminateResponse, $swooleResponse)->send();
+            Response::make($illuminateResponse, $swooleResponse, $swooleRequest)->send();
         } catch (Throwable $e) {
             try {
                 $exceptionResponse = $this->app
@@ -234,7 +234,7 @@ class Manager
                         $illuminateRequest,
                         $this->normalizeException($e)
                     );
-                Response::make($exceptionResponse, $swooleResponse)->send();
+                Response::make($exceptionResponse, $swooleResponse, $swooleRequest)->send();
             } catch (Throwable $e) {
                 $this->logServerError($e);
             }
@@ -411,7 +411,22 @@ class Manager
     protected function normalizeException(Throwable $e)
     {
         if (! $e instanceof Exception) {
-            $e = new FatalThrowableError($e);
+            if ($e instanceof \ParseError) {
+                $severity = E_PARSE;
+            } elseif ($e instanceof \TypeError) {
+                $severity = E_RECOVERABLE_ERROR;
+            } else {
+                $severity = E_ERROR;
+            }
+
+            $error = [
+                'type' => $severity,
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ];
+
+            $e = new FatalError($e->getMessage(), $e->getCode(), $error, null, true, $e->getTrace());
         }
 
         return $e;

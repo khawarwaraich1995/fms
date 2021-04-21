@@ -127,7 +127,7 @@ class OutletController extends Controller
                         upload_images(ORIGNAL_IMAGE_PATH_OUTLET,LARGE_IMAGE_PATH_OUTLET,MEDIUM_IMAGE_PATH_OUTLET,SMALL_IMAGE_PATH_OUTLET, $file, $last_id, 'admin_logo', 'outlets');
                     }
                 }
-                $this->generate_outlet_tables($last_id);
+                //$this->generate_outlet_tables($last_id);
                 return redirect()->route('admin:outlets')->with('success', 'Outlet registered successfully!');
             } else {
                 return back()->with('error', 'Something Went wrong!');
@@ -188,7 +188,7 @@ class OutletController extends Controller
         }
         $active_outlet_id = Session::get('outlet_id');
         if (isset($outlet_id) && !empty($outlet_id)) {
-        $this->destroy_outlet_tables($outlet_id);
+        //$this->destroy_outlet_tables($outlet_id);
         $outlet = Outlet::find($outlet_id);
         $outlet->delete();
         if($active_outlet_id == $outlet_id)

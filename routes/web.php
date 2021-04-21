@@ -13,12 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect('admin/home');
-});
-Route::get('403_page', function () {
-  return view('403-page');
-});
 Route::group(['prefix' => 'admin','as' => 'admin:'], function () {
 
 Route::get('login', ['as' => 'login', 'uses' => 'AdminAuthController@index']);
@@ -118,4 +112,18 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'],'as' => 'admin:'], fu
     Route::post('menu/upload_csv', ['as' => 'menu.upload.csv', 'uses' => 'MenuController@uploadCSV']);
     Route::post('menu/upload_excel', ['as' => 'menu.upload.excel', 'uses' => 'MenuController@uploadexcel']);
 
+     //Extras
+     Route::get('extras', ['as' => 'extras', 'uses' => 'ExtrasController@index']);
+     Route::get('extras/create', ['as' => 'extra.create', 'uses' => 'ExtrasController@create']);
+     Route::any('extras/add', ['as' => 'extra.add', 'uses' => 'ExtrasController@store']);
+     Route::any('extras/update/{id}', ['as' => 'extra.update', 'uses' => 'ExtrasController@store']);
+     Route::get('extras/edit/{id}', ['as' => 'extra.edit', 'uses' => 'ExtrasController@edit']);
+     Route::post('extras/change_status', ['as' => 'extra.status', 'uses' => 'ExtrasController@change_status']);
+     Route::get('extras/destroy/{id}', ['as' => 'extra.destroy', 'uses' => 'ExtrasController@destroy']);
+
 });
+
+
+Route::get('{any}', function () {
+  return view('app');
+})->where('any', '.*');

@@ -15,8 +15,8 @@ if (isset($menu->id) && $menu->id != 0) {
 ?>
 
 <div class="container-fluid mt--7">
-    <div class="row">
-        <div class="col-xl-7">
+    <div class="row justify-content-center">
+        <div class="col-xl-8">
             <div class="card bg-secondary shadow">
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
@@ -77,7 +77,7 @@ if (isset($menu->id) && $menu->id != 0) {
                                         <div class="row">
                                             <div class="col-lg-7 col-md-7">
                                                 <label class="form-control-label" for="item_discount">Item Discount</label>
-                                                <input type="number" name="item_discount" id="item_discount" class="form-control form-control-alternative" placeholder="Discount" value="{{$menu->item_discount ?? ''}}">
+                                                <input type="number" name="item_discount" id="item_discount" class="form-control form-control-alternative" placeholder="Discount" value="{{$menu->item_discount ?? 0}}">
                                             </div>
                                             <div class="col-lg-5 col-md-5">
                                                 <label class="form-control-label" for="item_discount_type">Discount Type</label>
@@ -103,7 +103,7 @@ if (isset($menu->id) && $menu->id != 0) {
                                     </div>
                                     <div class="form-group">
                                         @php
-                                        if($menu->status == 1)
+                                        if(isset($menu) && $menu->status == 1)
                                         {
                                         $checked = "checked";
                                         }else{
@@ -118,7 +118,7 @@ if (isset($menu->id) && $menu->id != 0) {
                                     </div>
                                     <div class="form-group">
                                         @php
-                                        if($menu->is_featured == 1)
+                                        if(isset($menu) && $menu->is_featured == 1)
                                         {
                                         $checked = "checked";
                                         }else{
@@ -133,7 +133,7 @@ if (isset($menu->id) && $menu->id != 0) {
                                     </div>
                                     <div class="form-group">
                                     @php
-                                        if($menu->status == 1)
+                                        if(isset($menu) && $menu->status == 1)
                                         {
                                         $checked = "checked";
                                         }else{
@@ -148,7 +148,7 @@ if (isset($menu->id) && $menu->id != 0) {
                                     </div>
                                     <div class="form-group">
                                     @php
-                                        if($menu->itemDiscount_status == 1)
+                                        if(isset($menu) && $menu->itemDiscount_status == 1)
                                         {
                                         $checked = "checked";
                                         }else{
@@ -163,7 +163,7 @@ if (isset($menu->id) && $menu->id != 0) {
                                     </div>
                                     <div class="form-group">
                                     @php
-                                        if($menu->has_extras == 1)
+                                        if(isset($menu) && $menu->has_extras == 1)
                                         {
                                         $checked = "checked";
                                         }else{
@@ -193,7 +193,7 @@ if (isset($menu->id) && $menu->id != 0) {
                 </div>
             </div>
         </div>
-        <div class="col-xl-5 mb-5 mb-xl-0">
+        <!-- <div class="col-xl-5 mb-5 mb-xl-0">
             <br>
             <div class="card card-profile shadow">
                 <div class="card-header">
@@ -240,7 +240,7 @@ if (isset($menu->id) && $menu->id != 0) {
                     </table>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
     <footer class="footer">
@@ -287,6 +287,10 @@ if (isset($menu->id) && $menu->id != 0) {
                 rules: {
                     item_name: {
                         required: true,
+                    },
+                    item_price: {
+                        required: true,
+                        number: true,
                     },
                 }
             });

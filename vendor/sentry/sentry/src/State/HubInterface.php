@@ -11,6 +11,7 @@ use Sentry\EventHint;
 use Sentry\EventId;
 use Sentry\Integration\IntegrationInterface;
 use Sentry\Severity;
+use Sentry\Tracing\SamplingContext;
 use Sentry\Tracing\Span;
 use Sentry\Tracing\Transaction;
 use Sentry\Tracing\TransactionContext;
@@ -74,17 +75,19 @@ interface HubInterface
     /**
      * Captures a message event and sends it to Sentry.
      *
-     * @param string   $message The message
-     * @param Severity $level   The severity level of the message
+     * @param string         $message The message
+     * @param Severity|null  $level   The severity level of the message
+     * @param EventHint|null $hint    Object that can contain additional information about the event
      */
-    public function captureMessage(string $message, ?Severity $level = null): ?EventId;
+    public function captureMessage(string $message, ?Severity $level = null/*, ?EventHint $hint = null*/): ?EventId;
 
     /**
      * Captures an exception event and sends it to Sentry.
      *
-     * @param \Throwable $exception The exception
+     * @param \Throwable     $exception The exception
+     * @param EventHint|null $hint      Object that can contain additional information about the event
      */
-    public function captureException(\Throwable $exception): ?EventId;
+    public function captureException(\Throwable $exception/*, ?EventHint $hint = null*/): ?EventId;
 
     /**
      * Captures a new event using the provided data.
@@ -96,8 +99,10 @@ interface HubInterface
 
     /**
      * Captures an event that logs the last occurred error.
+     *
+     * @param EventHint|null $hint Object that can contain additional information about the event
      */
-    public function captureLastError(): ?EventId;
+    public function captureLastError(/*?EventHint $hint = null*/): ?EventId;
 
     /**
      * Records a new breadcrumb which will be attached to future events. They
@@ -138,9 +143,10 @@ interface HubInterface
      * which point the transaction with all its finished child spans will be sent to
      * Sentry.
      *
-     * @param TransactionContext $context Properties of the new transaction
+     * @param TransactionContext   $context               Properties of the new transaction
+     * @param array<string, mixed> $customSamplingContext Additional context that will be passed to the {@see SamplingContext}
      */
-    public function startTransaction(TransactionContext $context): Transaction;
+    public function startTransaction(TransactionContext $context/*, array $customSamplingContext = []*/): Transaction;
 
     /**
      * Returns the transaction that is on the Hub.

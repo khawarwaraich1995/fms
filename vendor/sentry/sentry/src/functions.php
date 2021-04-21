@@ -22,22 +22,26 @@ function init(array $options = []): void
 /**
  * Captures a message event and sends it to Sentry.
  *
- * @param string        $message The message
- * @param Severity|null $level   The severity level of the message
+ * @param string         $message The message
+ * @param Severity|null  $level   The severity level of the message
+ * @param EventHint|null $hint    Object that can contain additional information about the event
  */
-function captureMessage(string $message, ?Severity $level = null): ?EventId
+function captureMessage(string $message, ?Severity $level = null, ?EventHint $hint = null): ?EventId
 {
-    return SentrySdk::getCurrentHub()->captureMessage($message, $level);
+    /** @psalm-suppress TooManyArguments */
+    return SentrySdk::getCurrentHub()->captureMessage($message, $level, $hint);
 }
 
 /**
  * Captures an exception event and sends it to Sentry.
  *
- * @param \Throwable $exception The exception
+ * @param \Throwable     $exception The exception
+ * @param EventHint|null $hint      Object that can contain additional information about the event
  */
-function captureException(\Throwable $exception): ?EventId
+function captureException(\Throwable $exception, ?EventHint $hint = null): ?EventId
 {
-    return SentrySdk::getCurrentHub()->captureException($exception);
+    /** @psalm-suppress TooManyArguments */
+    return SentrySdk::getCurrentHub()->captureException($exception, $hint);
 }
 
 /**
@@ -52,11 +56,14 @@ function captureEvent(Event $event, ?EventHint $hint = null): ?EventId
 }
 
 /**
- * Logs the most recent error (obtained with {@link error_get_last}).
+ * Logs the most recent error (obtained with {@see error_get_last()}).
+ *
+ * @param EventHint|null $hint Object that can contain additional information about the event
  */
-function captureLastError(): ?EventId
+function captureLastError(?EventHint $hint = null): ?EventId
 {
-    return SentrySdk::getCurrentHub()->captureLastError();
+    /** @psalm-suppress TooManyArguments */
+    return SentrySdk::getCurrentHub()->captureLastError($hint);
 }
 
 /**
@@ -108,9 +115,11 @@ function withScope(callable $callback): void
  * which point the transaction with all its finished child spans will be sent to
  * Sentry.
  *
- * @param TransactionContext $context Properties of the new transaction
+ * @param TransactionContext   $context               Properties of the new transaction
+ * @param array<string, mixed> $customSamplingContext Additional context that will be passed to the {@see \Sentry\Tracing\SamplingContext}
  */
-function startTransaction(TransactionContext $context): Transaction
+function startTransaction(TransactionContext $context, array $customSamplingContext = []): Transaction
 {
-    return SentrySdk::getCurrentHub()->startTransaction($context);
+    /** @psalm-suppress TooManyArguments */
+    return SentrySdk::getCurrentHub()->startTransaction($context, $customSamplingContext);
 }

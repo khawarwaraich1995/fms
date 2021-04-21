@@ -101,6 +101,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ route('admin:extras') }}" class="nav-link">
+                                <i class="ni ni-fat-add text-orange"></i>{{ __('Extras') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="" class="nav-link">
                                     <i class="ni ni-box-2 text-yellow"></i>{{ __('Deals') }}
                                 </a>
