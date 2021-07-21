@@ -2788,7 +2788,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 vue__WEBPACK_IMPORTED_MODULE_3__.default.use(vuex__WEBPACK_IMPORTED_MODULE_4__.default);
-(axios__WEBPACK_IMPORTED_MODULE_1___default().defaults.baseURL) = 'http://127.0.0.1:8000/api';
+(axios__WEBPACK_IMPORTED_MODULE_1___default().defaults.baseURL) = 'https://vue.khawarr.com/api';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_4__.default.Store({
   state: {
     user: null
