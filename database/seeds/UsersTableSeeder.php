@@ -12,15 +12,10 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => 'Super Admin',
-            'email' => 'admin@rms.com',
-            'username' => 'admin@rms',
-            'role' => 'super admin',
-            'email_verified_at' => now(),
-            'password' => Hash::make('secret'),
-            'created_at' => now(),
-            'updated_at' => now()
+        DB::table('customers')->insert([
+            'name' => 'John Doe',
+            'email' => 'khawar1@hwryk.com',
+            'password' => Hash::make('password')
         ]);
     }
 }

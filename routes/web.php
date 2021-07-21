@@ -73,15 +73,15 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'],'as' => 'admin:'], fu
   Route::post('roles/permission-modules/update/{id}', ['as' => 'permissions-modules.update', 'uses' => 'RolesController@permission_modules_update']);
 
 
-  //Permissions Management
-  Route::group(['middleware' => ['role:Developer']], function () {
+  // //Permissions Management
+  // Route::group(['middleware' => ['role:Developer']], function () {
       Route::get('permission/create', ['as' => 'permission.create', 'uses' => 'PermissionsController@create']);
       Route::get('permissions', ['as' => 'permissions', 'uses' => 'PermissionsController@index']);
       Route::get('permissions/edit/{id}', ['as' => 'permission.edit', 'uses' => 'PermissionsController@edit']);
       Route::post('permissions/add', ['as' => 'permissions.add', 'uses' => 'PermissionsController@store']);
       Route::any('permissions/update/{id}', ['as' => 'permissions.update', 'uses' => 'PermissionsController@store']);
       Route::any('permissions/delete/{id}', ['as' => 'permissions.delete', 'uses' => 'PermissionsController@destroy']);
-  });
+  // });
 
 
   //Settings

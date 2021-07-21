@@ -1,25 +1,29 @@
 "use strict";
 
+var _bootstrapVue = require("bootstrap-vue");
+
 var _buefy = _interopRequireDefault(require("buefy"));
 
-require("buefy/dist/buefy.css");
-
 var _vuesax = _interopRequireDefault(require("vuesax"));
-
-require("vuesax/dist/vuesax.css");
 
 var _router = _interopRequireDefault(require("./router"));
 
 require("./assets/app.css");
 
-require("material-icons/iconfont/material-icons.css");
+require("bootstrap/dist/css/bootstrap.css");
+
+require("bootstrap-vue/dist/bootstrap-vue.css");
+
+require("vuesax/dist/vuesax.css");
+
+require("buefy/dist/buefy.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-require('./bootstrap');
-
 window.Vue = require('vue')["default"];
 Vue.use(_buefy["default"]);
+Vue.use(_bootstrapVue.BootstrapVue);
+Vue.use(_bootstrapVue.IconsPlugin);
 Vue.use(_vuesax["default"], {
   colors: {
     primary: '#5b3cc4',
@@ -32,7 +36,7 @@ Vue.use(_vuesax["default"], {
 
 Vue.component('app-layout', require('./components/app.vue')["default"]);
 Vue.component('app-header', require('./components/layouts/header.vue')["default"]);
-Vue.component('app-topBar', require('./components/layouts/topbar.vue')["default"]);
+Vue.component('app-footer', require('./components/layouts/footer.vue')["default"]);
 var app = new Vue({
   el: '#app',
   router: _router["default"]

@@ -20,6 +20,8 @@ use Composer\Semver\VersionParser;
 
 
 
+
+
 class InstalledVersions
 {
 private static $installed = array (
@@ -30,7 +32,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '1204b81171ea893cfa61c7fb23bc0e6fc3e170a3',
+    'reference' => '79ece8c0a8615c9884712c13c81cc8623a167452',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -52,15 +54,6 @@ private static $installed = array (
       array (
       ),
       'reference' => '6420113d90bb746423fa70b9940e9e7c26ebc121',
-    ),
-    'box/spout' => 
-    array (
-      'pretty_version' => 'v3.2.0',
-      'version' => '3.2.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '0f20c99a7f8b8792840ac061c34f3450641a03cc',
     ),
     'brick/math' => 
     array (
@@ -86,15 +79,6 @@ private static $installed = array (
       array (
         0 => '*',
       ),
-    ),
-    'cyber-duck/laravel-excel' => 
-    array (
-      'pretty_version' => '2.2.0',
-      'version' => '2.2.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '389c83ab692065acd12765632ad369b6a7ef3e96',
     ),
     'davedevelopment/hamcrest-php' => 
     array (
@@ -518,7 +502,16 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '1204b81171ea893cfa61c7fb23bc0e6fc3e170a3',
+      'reference' => '79ece8c0a8615c9884712c13c81cc8623a167452',
+    ),
+    'laravel/sanctum' => 
+    array (
+      'pretty_version' => 'v2.11.2',
+      'version' => '2.11.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'b21e65cbe13896946986cb0868180cd69e1bd5d3',
     ),
     'laravel/tinker' => 
     array (
@@ -954,8 +947,8 @@ private static $installed = array (
     array (
       'provided' => 
       array (
-        0 => '1.0',
-        1 => '1.0.0',
+        0 => '1.0.0',
+        1 => '1.0',
       ),
     ),
     'psr/simple-cache' => 
@@ -1562,7 +1555,6 @@ foreach (self::getInstalled() as $installed) {
 $packages[] = array_keys($installed['versions']);
 }
 
-
 if (1 === \count($packages)) {
 return $packages[0];
 }
@@ -1726,9 +1718,23 @@ return $installed[0]['root'];
 
 
 
+
 public static function getRawData()
 {
+@trigger_error('getRawData only returns the first dataset loaded, which may not be what you expect. Use getAllRawData() instead which returns all datasets for all autoloaders present in the process.', E_USER_DEPRECATED);
+
 return self::$installed;
+}
+
+
+
+
+
+
+
+public static function getAllRawData()
+{
+return self::getInstalled();
 }
 
 
@@ -1754,6 +1760,7 @@ public static function reload($data)
 self::$installed = $data;
 self::$installedByVendor = array();
 }
+
 
 
 

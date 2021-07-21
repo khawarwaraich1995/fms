@@ -1,59 +1,81 @@
 <template>
-  <!-- <b-navbar>
-    <template #brand>
-      <b-navbar-item tag="router-link" :to="{ path: '/' }">
-        <img
-          src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png" class="logo"
-        />
-      </b-navbar-item>
-    </template>
-    <template #start>
-      <router-link to="/" class="navbar-item" active-link="active">
-        <b-navbar-item > Home </b-navbar-item>
-      </router-link>
-       <router-link to="/menu" class="navbar-item">
-        <b-navbar-item > Menu </b-navbar-item>
-      </router-link>
-    </template>
-
-    <template #end>
-      <b-navbar-item tag="div">
-        <div class="buttons">
-          <a class="button is-primary">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-light"> Log in </a>
+  <header id="header">
+    <div class="header-area">
+      <topbar>{{user}}</topbar>
+      <div class="header-top-area">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6">
+            <language-dropdown></language-dropdown>
+            </div>
+            <div class="col-lg-6">
+             <auth-menu v-if="isLogged"></auth-menu>
+             <guest-menu v-if="!isLogged"></guest-menu>
+            </div>
+          </div>
         </div>
-      </b-navbar-item>
-    </template>
-  </b-navbar> -->
+      </div>
+      <div class="header-main-area">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3">
+              <div class="header-logo">
+                <logo></logo>
+              </div>
+            </div>
+            <div class="col-lg-9">
+              <div class="header-main-right-area">
+                <a href="#" id="toggle-sidebar-left"
+                  ><div class="shopping-cart f-right">
+                    <span class="ti-shopping-cart mr-15"></span>
+                    <div class="count_load"></div></div
+                ></a>
 
-    <div class="center examplex navbar">
-      <vs-navbar shadow fixed center-collapsed>
-        <template #left>
-          <img src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png" class="logo">
-        </template>
-        <router-link to="/" class="navbar-item" active-link="active">
-        <vs-navbar-item id="guide">
-          Home
-        </vs-navbar-item>
-        </router-link>
-        <router-link to="/menu" class="navbar-item">
-        <vs-navbar-item id="docs">
-          Menu
-        </vs-navbar-item>
-        </router-link>
-        <vs-navbar-item id="components">
-          Offers
-        </vs-navbar-item>
-        <vs-navbar-item id="license">
-          Contact Us
-        </vs-navbar-item>
-        <template #right>
-          <vs-button flat >Login</vs-button>
-          <vs-button>Get Started</vs-button>
-        </template>
-      </vs-navbar>
+                <div class="main-menu f-right">
+                  <div class="mobile-menu">
+                    <a
+                      class="toggle f-right hc-nav-trigger hc-nav-1"
+                      href="#"
+                      role="button"
+                      aria-controls="hc-nav-1"
+                      ><i class="ti-menu"></i
+                    ></a>
+                  </div>
+                  <nav id="main-nav" class="hc-nav-original hc-nav-1">
+                    <ul>
+                      <menu-items></menu-items>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
+    <cart></cart>
+  </header>
 </template>
+  <script>
+  import { mapGetters } from 'vuex'
+export default {
+  data() {
+    return {
+      active: "home",
+      user: localStorage.getItem('user')
+    };
+  },
+  computed: {
+    ...mapGetters([
+      'isLogged'
+    ])
+  },
+  methods: {
+    toggleActive(event) {
+      var id = event.target.id;
+      this.active = id;
+    },
+  },
+};
+</script>
+

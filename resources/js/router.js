@@ -4,6 +4,9 @@ import VueRouter from 'vue-router';
 
 import Home from './components/pages/homepage';
 import Menu from './components/pages/menu';
+import Login from './components/pages/auth/login';
+import Register from './components/pages/auth/register';
+import Profile from './components/pages/auth/customerProfile';
 
 Vue.use(VueRouter);
 
@@ -15,10 +18,37 @@ const routes = [
     {
         path: "/menu",
         component: Menu
+    },
+    {
+        path: "/register",
+        component: Register
+    },
+    {
+        path: "/login",
+        component: Login
+    },
+    {
+        path: "/profile",
+        component: Profile,
+        meta: {
+            auth: true,
+        },
     }
 ]
 
-export default new VueRouter({
+const router = new VueRouter({
     mode: 'history',
     routes
-});
+  })
+
+router.beforeEach((to, from, next) => {
+    const loggedIn = localStorage.getItem('user')
+  
+    if (to.matched.some(record => record.meta.auth) && !loggedIn) {
+      next('/login')
+      return
+    }
+    next()
+  })
+
+  export default router

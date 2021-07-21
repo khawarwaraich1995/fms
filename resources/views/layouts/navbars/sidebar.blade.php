@@ -162,13 +162,11 @@
                     </a>
                 </li>
                 @endcan
-                @role('Super Admin')
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('admin:permissions')}}">
                         <i class="ni ni-planet text-yellow"></i> {{ __('Permissions Management') }}
                     </a>
                 </li>
-                @endrole
                 @can('View Users')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin:users')}}">
